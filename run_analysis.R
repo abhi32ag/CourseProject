@@ -1,16 +1,16 @@
 # step1 - Merging the training and testing data
 
 # training data
-trainData <- read.table("./train/X_train.txt")
-trainLabel <- read.csv("./train/y_train.txt", sep= " ",header = F)
+trainData <- read.table(".data/train/X_train.txt")
+trainLabel <- read.csv(".data/train/y_train.txt", sep= " ",header = F)
 
-trainSubject <- read.table("./train/subject_train.txt")
+trainSubject <- read.table(".data/train/subject_train.txt")
 
 # testing data
-testData <- read.table("./test/X_test.txt")
-testLabel <- read.csv("./test/y_test.txt", sep= " ",header = F)
+testData <- read.table(".data/test/X_test.txt")
+testLabel <- read.csv(".data/test/y_test.txt", sep= " ",header = F)
 
-testSubject <- read.table("./test/subject_test.txt")
+testSubject <- read.table(".data/test/subject_test.txt")
 
 # merged data
 mergedData <- rbind(trainData,testData)
@@ -20,7 +20,7 @@ mergedSubject <- rbind(trainSubject,testSubject)
 
 # step2 - Extracting measurements on mean and standard deviation
 
-features <- read.table("./features.txt")
+features <- read.table(".data/features.txt")
 meanStdIndices <- grep("mean\\(\\)|std\\(\\)",features[,2])
 mergedData <- mergedData[, meanStdIndices]
 names(mergedData) <- gsub("\\(\\)","",features[meanStdIndices, 2]) # adding names to feaures in Data
@@ -31,7 +31,7 @@ names(mergedData) <- gsub("std","Std",names(mergedData)) # replaces std with Std
 
 # step3 - Use descriptive activity name to name activites in data set
 
-activity <- read.table("./activity_labels.txt")
+activity <- read.table(".data/activity_labels.txt")
 activity[,2] <- tolower(gsub("_","",activity[, 2]))
 substr(activity[2,2],8,8) <- toupper(substr(activity[2,2],8,8)) # captilize "U" in Upstairs
 substr(activity[3,2],8,8) <- toupper(substr(activity[3,2],8,8)) # captilize "D" in Downstairs
